@@ -73,7 +73,9 @@ export const Commands = [
         args: "<message>",
         description: _td("slash_command|spoiler"),
         runFn: function (cli, roomId, threadId, message = "") {
-            return successSync(ContentHelpers.makeHtmlMessage(message, `<span data-mx-spoiler>${message}</span>`));
+            // MSC4454 suggests to set the spoilered plain text message, the body to a neutral word, to not include it
+            // to notifications or message previews where html isn't rendered
+            return successSync(ContentHelpers.makeHtmlMessage('[Spoiler]', `<span data-mx-spoiler>${message}</span>`));
         },
         category: CommandCategories.messages,
     }),
